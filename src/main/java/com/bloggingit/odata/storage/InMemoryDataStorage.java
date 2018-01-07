@@ -3,9 +3,6 @@ package com.bloggingit.odata.storage;
 import com.bloggingit.odata.model.BaseEntity;
 import com.bloggingit.odata.model.Book;
 import com.bloggingit.odata.exception.EntityDataException;
-import com.bloggingit.odata.model.Author;
-import com.bloggingit.odata.model.ContactInfo;
-import com.bloggingit.odata.model.Gender;
 import com.bloggingit.odata.olingo.v4.util.ReflectionUtils;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -22,14 +19,12 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class InMemoryDataStorage {
 
-    private static final ConcurrentMap<String, Book> DATA_BOOKS = new ConcurrentHashMap<>();
-    private static final ConcurrentMap<String, Author> DATA_AUTHOR = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, Book> DATA_MAT = new ConcurrentHashMap<>();
 
     static {
-        createAuthorList();
-        createBookList();
+        createMaterialsList();
     }
-    private static void createBookList() {
+    private static void createMaterialsList() {
         LocalDateTime lDate1 = LocalDateTime.of(2011, Month.JULY, 21, 0, 0);
         LocalDateTime lDate2 = LocalDateTime.of(2015, Month.AUGUST, 6, 13, 15);
         LocalDateTime lDate3 = LocalDateTime.of(2013, Month.MAY, 12, 0, 0);
@@ -38,31 +33,17 @@ public class InMemoryDataStorage {
         Date date2 = Date.from(lDate2.atZone(ZoneId.systemDefault()).toInstant());
         Date date3 = Date.from(lDate3.atZone(ZoneId.systemDefault()).toInstant());
 
-        Book book1 = new Book("Book Title 1", "This is the description of book 1", date1, DATA_AUTHOR.get("1"), 9.95, true);
-        Book book2 = new Book("Book Title 2", "This is the description of book 2", date2, DATA_AUTHOR.get("2"), 5.99, true);
-        Book book3 = new Book("Book Title 3", "This is the description of book 3", date3, DATA_AUTHOR.get("3"), 14.50, false);
+        Book mat1 = new Book("EN", "This is the description of book 1", "A", true, true, "G1", "kg", 9.95, date1);
+        //Materials book2 = new Materials("N", "This is the description of book 2", date2, DATA_AUTHOR.get("2"), 5.99, true);
+        //Materials book3 = new Materials("O", "This is the description of book 3", date3, DATA_AUTHOR.get("3"), 14.50, false);
 
-        book1.setId("'A1'");
-        book2.setId("'B2'");
-        book3.setId("'C3'");
+        mat1.setId("A1");
+        //book2.setId("B2");
+        //book3.setId("C3");
 
-        DATA_BOOKS.put(book1.getId(), book1);
-        DATA_BOOKS.put(book2.getId(), book2);
-        DATA_BOOKS.put(book3.getId(), book3);
-    }
-
-    private static void createAuthorList() {
-        Author author1 = new Author("Author 1", Gender.MALE, new ContactInfo("author1@test.xyz", "123/456"));
-        Author author2 = new Author("Author 2", Gender.FEMALE, new ContactInfo("author2@test.xyz", "654/321"));
-        Author author3 = new Author("Author 3", Gender.UNKOWN, new ContactInfo("author3@test.xyz", null));
-
-        author1.setId("1");
-        author2.setId("2");
-        author3.setId("3");
-
-        DATA_AUTHOR.put(author1.getId(), author1);
-        DATA_AUTHOR.put(author2.getId(), author2);
-        DATA_AUTHOR.put(author3.getId(), author3);
+        DATA_MAT.put(mat1.getId(), mat1);
+        //DATA_MAT.put(book2.getId(), book2);
+        //DATA_MAT.put(book3.getId(), book3);
     }
 
     @SuppressWarnings("unchecked")
@@ -70,9 +51,9 @@ public class InMemoryDataStorage {
         ConcurrentMap<String, T> entities = null;
 
         if (Book.class.equals(entityClazz)) {
-            entities = (ConcurrentMap<String, T>) DATA_BOOKS;
-        } else if (Author.class.equals(entityClazz)) {
-            entities = (ConcurrentMap<String, T>) DATA_AUTHOR;
+            entities = (ConcurrentMap<String, T>) DATA_MAT;
+//        } else if (Author.class.equals(entityClazz)) {
+//            entities = (ConcurrentMap<String, T>) DATA_AUTHOR;
         }
 
         return entities;
@@ -103,15 +84,15 @@ public class InMemoryDataStorage {
 
         if (newEntity instanceof BaseEntity) {
             if (newEntity instanceof Book) {
-                Author author = ((Book) newEntity).getAuthor();
-                if (author != null) {
-                    if ("".equals(author.getId())) {
-                        author = (Author) getDataByClassAndId(newEntity.getClass(), author.getId());
-                    } else {
-                        author = createEntity(author);
-                    }
-                    ((Book) newEntity).setAuthor(author);
-                }
+//                Author author = ((Materials) newEntity).getAuthor();
+//                if (author != null) {
+//                    if ("".equals(author.getId())) {
+//                        author = (Author) getDataByClassAndId(newEntity.getClass(), author.getId());
+//                    } else {
+//                        author = createEntity(author);
+//                    }
+//                    ((Materials) newEntity).setAuthor(author);
+//                }
             }
 
             @SuppressWarnings("unchecked")

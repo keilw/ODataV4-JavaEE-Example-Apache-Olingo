@@ -35,7 +35,7 @@ public class ODataDemoServlet extends HttpServlet {
 
     public static final String SERVLET_NAME = "ODataDemoServlet";
 
-    public static final String SERVLET_URL_PATTERNS = "/api/servlet/v1/odatademo.svc/*";
+    public static final String SERVLET_URL_PATTERNS = "/odata/sap/ZGW_MATERIAL_SERVICE_SRV/*";
 
     private static final String BASE_MODEL_PACKAGE = "com.bloggingit.odata.model";
 

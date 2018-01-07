@@ -21,23 +21,33 @@ import lombok.Setter;
 @EdmEntitySet
 public class Book extends BaseEntity {
 
-    @EdmProperty(facets = @EdmFacets(nullable = false))
-    private String title;
-
-    @EdmProperty(facets = @EdmFacets(maxLength = 2000))
+    @EdmProperty
+    private String Langu;
+    
+    @EdmProperty(name = "MatlDesc", facets = @EdmFacets(maxLength = 2000))
     private String description;
 
+    @EdmProperty
+    private String MatlType;
+    
+    @EdmProperty
+    private boolean basicView;
+    
+    @EdmProperty
+    private boolean delFlag;
+
+    @EdmProperty
+    private String MatlGroup;
+    
+    @EdmProperty
+    private String baseUom;
+
+    @EdmProperty
+    private Double netWeight;
+  
     @EdmProperty(name = "releaseDate")
     private Date release;
 
-    @EdmProperty
-    private Author author;
-
-    @EdmProperty
-    private Double price;
-
-    @EdmProperty
-    private boolean inStock;
 
     public void setRelease(Date release) {
         this.release = (release != null) ? new Date(release.getTime()) : null;

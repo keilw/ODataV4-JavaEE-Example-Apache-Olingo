@@ -16,6 +16,6 @@ import lombok.Setter;
 public abstract class BaseEntity {
 
     @EdmKey
-    @EdmProperty(facets = @EdmFacets(nullable = false))
+    @EdmProperty(name = "Material", facets = @EdmFacets(nullable = false))
     private String id;
 }
